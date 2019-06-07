@@ -24,7 +24,7 @@ The vanilla EaselJS render just traverses all the scene tree, directly calling t
 In order to do a more complex process of the rendered objects, first I splitted the loop in two stages:
 
 1. Traverse all scene tree and create an array of 'instructions' that renders the scene
-2. Traverse the instruction array to actual perform all the render actions:
+2. Traverse the instruction array to actually perform all the render actions:
 
 ![Alt text](https://raw.githubusercontent.com/Nestorferrando/kotlin_webgl_loop/master/readmeimages/image3.jpg "")
 
