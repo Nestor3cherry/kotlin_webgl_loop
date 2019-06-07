@@ -31,9 +31,9 @@ In order to do a more complex process of the rendered objects, first I splitted 
 this additional step allows me to perform modifications over the instructions array, such us reorder and group objects with similar alpha blending
 
 
-After this, I created an additional instruction: flatten. All nodes tagged with flatten will have independent instructions array. In a separate process, these arrays will be combined in a single one, unifying the elements with the same blending if possible:
+After this, I created an additional instruction: flatten. All nodes tagged with flatten will have independent instructions array. In a new step, these arrays will be combined in a single one, unifying the elements with the same blending if possible:
 ![Alt text](https://raw.githubusercontent.com/Nestorferrando/kotlin_webgl_loop/master/readmeimages/image4.jpg "")
 
-As a result, the set of render isntructions becomes optimized.
+As a result, the set of render instructions becomes optimized.
 
 I succesfully tested this render loop on several scenarios, obtaining significative performance boosts on mobile phones.
