@@ -16,7 +16,7 @@ The 2D scene is stored as a tree, where the leaves are the actual items to be re
 
 ![Alt text](https://raw.githubusercontent.com/Nestorferrando/kotlin_webgl_loop/master/readmeimages/image1.jpg "")
 
-The vanilla EaselJS render just traverses all the scene tree, directly calling the needed WebGL function to render all the objects. Each time the alpha blending of an object changes, the current batch is sent to render and a new batch starts to be filled.
+The vanilla EaselJS render just traverses all the scene tree, directly calling the needed WebGL function to render all the objects. Each time the alpha blending of the next object is different, the current batch is sent to render and a new batch starts to be filled.
 
 ![Alt text](https://raw.githubusercontent.com/Nestorferrando/kotlin_webgl_loop/master/readmeimages/image2.jpg "")
 
