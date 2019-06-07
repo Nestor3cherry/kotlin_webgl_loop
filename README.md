@@ -5,7 +5,7 @@
 
 While working on some complex 2D scenes rendered on WebGL, I realized the importance of minimizing the number of render batches in order to get good performance on mobile devices
 
-In most cases, the intensive use of additive compositing lead to high amount of composite changes, doing a render call prior each change
+In most cases, the intensive use of additive blending lead to high amount of alpha composite changes, doing a render call prior each change
 
 I realized that, in some cases this effect can be minimized if the rendering order of the different objects are not important (they don't overlap), getting nice performance improvements
 
