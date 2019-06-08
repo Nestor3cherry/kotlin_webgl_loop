@@ -147,22 +147,22 @@ private fun StageGL.regroupCommands(allGroups: CommandBufferGroup): CommandBuffe
 
     while (done < todo) {
         //step 1 get all draws for current composite
-        i=0
+        i = 0
         while (i < todo - done) {
             val it = remaining[i]
             while (true) {
-                val command = it.nextCommand
-                if (command == set_composite) {
-                    currentComposite = it.nextItem
-                    i++
-                    break
-                }
-
-                if (command != draw) throw Exception("only draw/mask commands inside a flatten section")
-                it.consume { com, item -> out.add(com, item) }
-                if (it.size == 0) {
+                if (it.size > 0) {
+                    val command = it.nextCommand
+                    if (command == set_composite) {
+                        currentComposite = it.nextItem
+                        i++
+                        break
+                    }
+                    if (command != draw) throw Exception("only draw/mask commands inside a flatten section")
+                    it.consume { com, item -> out.add(com, item) }
+                } else {
                     done++
-                    remaining[i] = remaining[todo - done ]
+                    remaining[i] = remaining[todo - done]
                     break
                 }
             }
@@ -175,12 +175,12 @@ private fun StageGL.regroupCommands(allGroups: CommandBufferGroup): CommandBuffe
 
         //unlock all items that next command is the selected composite
 
-        i=0
+        i = 0
         while (i < todo - done) {
             val it = remaining[i]
             if (currentComposite == it.nextItem) {
                 it.consume()
-                if (it.size == 0 ) {
+                if (it.size == 0) {
                     done++
                     remaining[i] = remaining[todo - done]
                     continue
@@ -189,9 +189,7 @@ private fun StageGL.regroupCommands(allGroups: CommandBufferGroup): CommandBuffe
             i++
         }
     }
-
     if (currentComposite != entryComposite) out.add(set_composite, entryComposite)
-
     return out
 }
 
