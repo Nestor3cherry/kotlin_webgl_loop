@@ -10,7 +10,7 @@ In most cases, the intensive use of additive blending lead to high amount of alp
 I realized that, in some cases this effect can be minimized if the rendering order of the different objects are not important (they don't overlap), getting nice performance improvements
 
 
-This work is based on a slight modified version of EaselJS WebGL render engine, but probably it works on the official released version too.
+This code works successfully over a slight modified version of EaselJS WebGL render engine, but probably it works on the official released version too.
 
 The 2D scene is stored as a tree, where the leaves are the actual items to be rendered. Nodes in the middle usually apply transforms (scaling, alpha, position...)
 
