@@ -218,8 +218,8 @@ private fun StageGL._searchInRenderTree(
             val useCache = item.cacheCanvas != undefined
 
             if (!useCache && item.asDynamic().children != undefined) {
+                if (item.asDynamic()._updateState)  item.asDynamic()._updateState()
                 if (item.asDynamic().children.length > 0) {
-                    if (item.asDynamic()._updateState)  item.asDynamic()._updateState()
                     getTransformMatrix(item, cMtx)
                     val groupForChild = processFlatten(item, commandBuffer)
                     val previousLazy = _renderModeLazy
