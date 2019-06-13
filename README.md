@@ -1,4 +1,4 @@
-# Kotlin-based WebGL render loop
+# Kotlin-based 2D WebGL render loop with draw order optimization
 
 ![Alt text](https://d2eip9sf3oo6c2.cloudfront.net/tags/images/000/000/936/thumb/webgl.png "Ingame screenshot")
 
