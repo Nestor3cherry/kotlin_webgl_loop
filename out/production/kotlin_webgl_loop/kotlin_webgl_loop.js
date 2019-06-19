@@ -8,6 +8,7 @@ var kotlin_webgl_loop = function (_, Kotlin) {
   var throwCCE = Kotlin.throwCCE;
   var StageGL_init = createjs.StageGL;
   var Ticker$Companion = createjs.Ticker;
+  var Text = createjs.Text;
   var IntRange = Kotlin.kotlin.ranges.IntRange;
   var Container = createjs.Container;
   var Shape = createjs.Shape;
@@ -38,24 +39,38 @@ var kotlin_webgl_loop = function (_, Kotlin) {
     stage.updateViewport(window.innerWidth, window.innerHeight);
     overrideRenderLoop(stage);
     Ticker$Companion.on('tick', onLoaded$lambda(stage));
+    var title = new Text('Kotlin-made WebGL render loop! :D', '24px Arial');
+    title.cache(0, 0, 512, 256);
+    title.y = 16.0;
+    stage.addChild(title);
+    var text1 = new Text('Circles rendered in order', '18px Arial', '#ffffff');
+    text1.cache(0, 0, 512, 256);
+    text1.y = 100.0;
+    text1.x = 20.0;
+    stage.addChild(text1);
     var tmp$_0;
     tmp$_0 = (new IntRange(1, 10)).iterator();
     while (tmp$_0.hasNext()) {
       var element = tmp$_0.next();
       var tmp$_1;
-      tmp$_1 = (new IntRange(1, 10)).iterator();
+      tmp$_1 = (new IntRange(5, 15)).iterator();
       while (tmp$_1.hasNext()) {
         var element_0 = tmp$_1.next();
         var circle = createCircle(element * 40.0, element_0 * 40.0, (element + element_0 | 0) % 2 !== 0);
         stage.addChild(circle);
       }
     }
+    var text2 = new Text('Circles automatically reordered to minimize blending changes', '18px Arial', '#ffffff');
+    text2.cache(0, 0, 512, 256);
+    text2.y = 100.0;
+    text2.x = 500.0;
+    stage.addChild(text2);
     var tmp$_2;
     tmp$_2 = (new IntRange(1, 10)).iterator();
     while (tmp$_2.hasNext()) {
       var element_1 = tmp$_2.next();
       var tmp$_3;
-      tmp$_3 = (new IntRange(1, 10)).iterator();
+      tmp$_3 = (new IntRange(5, 15)).iterator();
       while (tmp$_3.hasNext()) {
         var element_2 = tmp$_3.next();
         var circle_0 = createCircle(500 + element_1 * 40.0, element_2 * 40.0, (element_1 + element_2 | 0) % 2 !== 0);
@@ -293,16 +308,18 @@ var kotlin_webgl_loop = function (_, Kotlin) {
       while (i < (todo - done | 0)) {
         var it = remaining[i];
         while (true) {
-          var command = it.nextCommand;
-          if (command === set_composite) {
-            currentComposite = it.nextItem;
-            i = i + 1 | 0;
-            break;
+          if (it.size > 0) {
+            var command = it.nextCommand;
+            if (command === set_composite) {
+              currentComposite = it.nextItem;
+              i = i + 1 | 0;
+              break;
+            }
+            if (command !== draw)
+              throw Exception_init('only draw/mask commands inside a flatten section');
+            it.consume_70ax90$(regroupCommands$lambda(out));
           }
-          if (command !== draw)
-            throw Exception_init('only draw/mask commands inside a flatten section');
-          it.consume_70ax90$(regroupCommands$lambda(out));
-          if (it.size === 0) {
+           else {
             done = done + 1 | 0;
             remaining[i] = remaining[todo - done | 0];
             break;
@@ -344,9 +361,9 @@ var kotlin_webgl_loop = function (_, Kotlin) {
       if (element.visible && concatAlpha > 0.0035) {
         var useCache = element.cacheCanvas != undefined;
         if (!useCache && element.children != undefined) {
+          if (element._updateState)
+            element._updateState();
           if (element.children.length > 0) {
-            if (element._updateState)
-              element._updateState();
             getTransformMatrix(element, cMtx);
             var groupForChild = processFlatten(element, commandBuffer);
             var previousLazy = $receiver._renderModeLazy;
